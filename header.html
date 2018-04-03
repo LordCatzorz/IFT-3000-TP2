@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="fr-CA">
+
+<head>
+    <title>TP1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript">
+        window.MathJax = {
+            jax: ["input/TeX","output/HTML-CSS"],
+            tex2jax: {
+                skipTags: ["script","noscript","style","textarea","code"]
+            }
+        };
+
+    </script>
+
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_SVG">
+
+    </script>
+
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-dark.min.css">
+
+</head>
+
+<body>
+
+<header>
+  <a href="https://sitescours.monportail.ulaval.ca/ena/site/accueil?idSite=91039" class="logo">IFT-3000 Langages de programmation</a>
+</header>
+
+
+<h2 align="center">Démontrateur automatique v1.0</h2> 
+<h4 align="center">Hiver 2018</h4> 
+<br></br>
+<hr>
+<h5 align="center">Table 1 - Syntaxe de la logique</h5> 
+\begin{eqnarray*}
+        P ::=  1 \;|\; 0 \;|\; p \;|\; P \Leftrightarrow P' \;|\; P \Rightarrow P' \;|\; 
+                    P \vee P' \;|\; P \wedge P' \;|\; \neg P \;|\; (P) 
+\end{eqnarray*}
+<h5 align="center">Table 2 - Règle de résolution</h5> 
+\begin{eqnarray*}
+        ((p \vee q) \wedge (\neg p \vee r)) \Rightarrow (q \vee r) 
+\end{eqnarray*}
+<hr>
+<br></br>

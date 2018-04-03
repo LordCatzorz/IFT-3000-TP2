@@ -1,0 +1,39 @@
+(* Commentaires:
+
+   Soient les propositions suivantes:
+
+   n: « il neige »
+   p: « jean a revêtu sa polaire »
+   f: « jean a froid »
+   
+   Soient les hypothèses suivantes:
+
+   n => p: « s'il neige, jean met sa polaire » (H1)
+   p => (non f): « si jean a sa polaire, il n'a pas froid » (H2)
+   (non n) => (non f): « s'il ne neige pas, jean n'a pas froid » (H3) 
+
+   On veut conclure que:
+
+   non f: « jean n'a jamais froid » (C)
+
+   Il s'agierait donc de montrer que 
+	
+	H1 et H2 et H3 => C
+
+   Par la méthode de résolution, il s'agiera de montrer que:
+
+	H1 et H2 et H3 et (non C) => faux
+
+   Il s'agit en fait d'un raisonnement par l'absurde: 
+   « On suppose que (non C) est vraie (C n'est vraie), et on montre 
+     que c'est absurde (c'est faux) »
+
+   Fin Commentaires
+
+*)
+
+n => p;
+p => (non f);
+(non n) => (non f);
+
+non f

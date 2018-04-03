@@ -1,0 +1,9 @@
+(*
+
+Ceci est un commentaire.
+
+*)
+
+p <=> q;
+q <=> r;
+p <=> r
