@@ -1,7 +1,7 @@
 (* -------------------------------------------------------------------------- *)
 (* ----------------------- TP2 - IFT-3000 - Hiver 2018 ---------------------- *)
 (* -------------------------------------------------------------------------- *)
-(* Matricule étudiant: .........                                              *)
+(* Matricule étudiant: 111124564                                              *)
 (* Matricule étudiant: .........                                              *)
 (* Matricule étudiant: .........                                              *)
 (* -------------------------------------------------------------------------- *)
@@ -29,8 +29,49 @@
 (******************************************************************************)
 module Resolution : RESOLUTION = 
 struct
+  (* Seul espace où implanter le code du TP2 *)
 
-(* Seul espace où implanter le code du TP2 *)
+  exception Non_Implante of string
+
+  type proposition = TypesUtiles.proposition
+
+  type enonce_probleme = TypesUtiles.enonce_probleme
+
+  type clause = TypesUtiles.clause
+
+  type forme_clausale = TypesUtiles.forme_clausale
+
+  let union liste1 liste2 =
+    raise (Non_Implante "union à compléter") (*'a list -> 'a list -> 'a list*) 
+  ;;
+
+  let prod liste1 liste2 =
+    raise (Non_Implante "prod à compléter") (*'a list list -> 'a list list -> 'a list list*)
+  ;;
+
+  let paires liste =
+    raise (Non_Implante "paires à compléter") (*'a list -> (('a * 'a) * 'a list) list*) 
+  ;;
+
+  let enonce2proposition enon =
+    raise (Non_Implante "enonce2proposition à compléter") (*enonce_probleme -> proposition*) 
+  ;;
+
+  let mfc prop =
+    raise (Non_Implante "mfc à compléter") (*proposition -> forme_clausale*) 
+  ;;
+
+  let resolutions clause1 clause2 =
+    raise (Non_Implante "resolutions à compléter") (*clause -> clause -> clause list*) 
+  ;;
+
+  let decision prop =
+    raise (Non_Implante "decision à compléter") (*proposition -> bool*) 
+  ;;
+
+  let decisionTrace prop =
+    raise (Non_Implante "decisionTrace à compléter") (*proposition -> forme_clausale list option*) 
+  ;;
 
 end;;
 
