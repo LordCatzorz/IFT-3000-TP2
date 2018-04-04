@@ -29,6 +29,7 @@
 (******************************************************************************)
 module Resolution : RESOLUTION = 
 struct
+  open List;;
   (* Seul espace où implanter le code du TP2 *)
 
   exception Non_Implante of string
@@ -41,8 +42,12 @@ struct
 
   type forme_clausale = TypesUtiles.forme_clausale
 
+  let removeDuplicates lst =
+    fold_left (fun acc x -> if mem x acc then acc else acc@[x]) [] lst
+  ;;
+
   let union liste1 liste2 =
-    raise (Non_Implante "union à compléter") (*'a list -> 'a list -> 'a list*) 
+    removeDuplicates (liste1@liste2)
   ;;
 
   let prod liste1 liste2 =
