@@ -51,7 +51,7 @@ struct
   ;;
 
   let prod liste1 liste2 =
-    raise (Non_Implante "prod à compléter") (*'a list list -> 'a list list -> 'a list list*)
+    flatten (map (fun x -> map (fun y -> union x y) liste2 ) liste1)
   ;;
 
   let paires liste =
