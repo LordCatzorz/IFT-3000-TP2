@@ -59,12 +59,12 @@ struct
   ;;
 
   let paires liste =
-    let rec aux acc lst =
+    let rec aux lst =
       match lst with
-      | [] -> acc
-      | x::r -> (fold_left (fun acc' x' -> acc' @ [((x, x'), removeFromListElements liste [x; x'])]) [] r) @ (aux [] r)
+      | [] -> []
+      | x::r -> (fold_left (fun acc' x' -> acc' @ [((x, x'), removeFromListElements liste [x; x'])]) [] r) @ (aux r)
     in
-      aux [] liste
+      aux liste
   ;;
 
   let enonce2proposition enon =
