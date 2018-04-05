@@ -46,13 +46,8 @@ struct
     fold_left (fun acc x -> if mem x acc then acc else acc@[x]) [] lst
   ;;
 
-  let listOfItemAndRest lst =
-    let rec aux (acc, d, rest) =
-      match rest with
-      | [] -> acc
-      | x::r -> aux (acc@[(x, d@r)], d@[x], r)
-    in
-      aux ([],[], lst)
+  let removeFromListElements lst elementsToRemove =
+    filter (fun x -> for_all (fun x' -> x <> x') elementsToRemove) lst
   ;;
 
   let union liste1 liste2 =
@@ -67,7 +62,7 @@ struct
     let rec aux acc lst =
       match lst with
       | [] -> acc
-      | x::r -> aux (acc @ fold_left (fun acc' (x', r') -> ((x, x'), r')::acc') [] (listOfItemAndRest r)) r
+      | x::r -> (fold_left (fun acc' x' -> acc' @ [((x, x'), removeFromListElements liste [x; x'])]) [] r) @ (aux [] r)
     in
       aux [] liste (*'a list -> (('a * 'a) * 'a list) list*) 
   ;;
