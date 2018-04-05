@@ -64,8 +64,12 @@ struct
   ;;
 
   let paires liste =
-
-    raise (Non_Implante "paires à compléter") (*'a list -> (('a * 'a) * 'a list) list*) 
+    let rec aux acc lst =
+      match lst with
+      | [] -> acc
+      | x::r -> aux (acc @ fold_left (fun acc' (x', r') -> ((x, x'), r')::acc') [] (listOfItemAndRest r)) r
+    in
+      aux [] liste (*'a list -> (('a * 'a) * 'a list) list*) 
   ;;
 
   let enonce2proposition enon =
