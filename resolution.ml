@@ -46,6 +46,15 @@ struct
     fold_left (fun acc x -> if mem x acc then acc else acc@[x]) [] lst
   ;;
 
+  let listOfItemAndRest lst =
+    let rec aux (acc, d, rest) =
+      match rest with
+      | [] -> acc
+      | x::r -> aux (acc@[(x, d@r)], d@[x], r)
+    in
+      aux ([],[], lst)
+  ;;
+
   let union liste1 liste2 =
     removeDuplicates (liste1@liste2)
   ;;
@@ -55,6 +64,7 @@ struct
   ;;
 
   let paires liste =
+
     raise (Non_Implante "paires à compléter") (*'a list -> (('a * 'a) * 'a list) list*) 
   ;;
 
