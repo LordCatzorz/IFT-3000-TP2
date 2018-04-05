@@ -46,6 +46,10 @@ struct
     fold_left (fun acc x -> if mem x acc then acc else acc@[x]) [] lst
   ;;
 
+  let removeFromListElements lst elementsToRemove =
+    filter (fun x -> for_all (fun x' -> x <> x') elementsToRemove) lst
+  ;;
+
   let union liste1 liste2 =
     removeDuplicates (liste1@liste2)
   ;;
@@ -55,7 +59,12 @@ struct
   ;;
 
   let paires liste =
-    raise (Non_Implante "paires à compléter") (*'a list -> (('a * 'a) * 'a list) list*) 
+    let rec aux acc lst =
+      match lst with
+      | [] -> acc
+      | x::r -> (fold_left (fun acc' x' -> acc' @ [((x, x'), removeFromListElements liste [x; x'])]) [] r) @ (aux [] r)
+    in
+      aux [] liste
   ;;
 
   let enonce2proposition enon =
