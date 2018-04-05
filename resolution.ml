@@ -68,7 +68,12 @@ struct
   ;;
 
   let enonce2proposition enon =
-    raise (Non_Implante "enonce2proposition à compléter") (*enonce_probleme -> proposition*) 
+    let rec aux accProp propList =
+      match propList with
+      | [] -> accProp
+      | x::r -> aux (TypesUtiles.Et(x, accProp)) r
+    in
+      aux (TypesUtiles.Non(snd enon)) (fst enon)
   ;;
 
   let mfc prop =
