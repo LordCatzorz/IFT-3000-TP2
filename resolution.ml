@@ -64,7 +64,7 @@ struct
       | [] -> acc
       | x::r -> (fold_left (fun acc' x' -> acc' @ [((x, x'), removeFromListElements liste [x; x'])]) [] r) @ (aux [] r)
     in
-      aux [] liste (*'a list -> (('a * 'a) * 'a list) list*) 
+      aux [] liste
   ;;
 
   let enonce2proposition enon =
