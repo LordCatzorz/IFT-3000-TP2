@@ -30,6 +30,7 @@
 module Resolution : RESOLUTION = 
 struct
   open List;;
+  open TypesUtiles;;
   (* Seul espace où implanter le code du TP2 *)
 
   exception Non_Implante of string
@@ -41,6 +42,7 @@ struct
   type clause = TypesUtiles.clause
 
   type forme_clausale = TypesUtiles.forme_clausale
+
 
   let removeDuplicates lst =
     fold_left (fun acc x -> if mem x acc then acc else acc@[x]) [] lst
@@ -67,13 +69,8 @@ struct
       aux liste
   ;;
 
-  let enonce2proposition enon =
-    let rec aux accProp propList =
-      match propList with
-      | [] -> accProp
-      | x::r -> aux (TypesUtiles.Et(x, accProp)) r
-    in
-      aux (TypesUtiles.Non(snd enon)) (fst enon)
+  let enonce2proposition (propList, conc) =
+    fold_right (fun x acc -> Et(x, acc)) propList (Non(conc))
   ;;
 
   let mfc prop =
