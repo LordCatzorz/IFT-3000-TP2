@@ -72,9 +72,41 @@ struct
     fold_right (fun aProp accConjonction -> Et(aProp, accConjonction)) propList (Non(conclu))
   ;;
 
-  let mfc prop =
-    raise (Non_Implante "mfc à compléter") (*proposition -> forme_clausale*) 
+  let rec mfc prop =
+      match prop with
+      | Vrai | Non (Faux) -> []
+      | Faux | Non (Vrai) -> [[]]
+      | Var(_) | Non(Var(_)) -> [[prop]]
+      | Non(Non(x1)) -> mfc x1
+      | Non(Et(x1, x2)) -> mfc (Ou(Non(x1), Non(x2)))
+      | Non(Ou(x1, x2)) -> mfc (Et(Non(x1), Non(x2)))
+      | Non(Imp(x1, x2)) -> mfc (Non(Ou(Non(x1), x2)))
+      | Non(Equ(x1, x2)) -> mfc (Equ(Non(x1), x2))
+      | Et(x1, x2) -> union (mfc x1) (mfc x2)
+      | Ou(x1, x2) -> prod (mfc x1) (mfc x2)
+      | Imp(x1, x2) -> mfc (Ou(Non(x1), x2))
+      | Equ(x1, x2) -> mfc (Et(Imp(x1, x2), Imp(x2, x1)))
   ;;
+
+  (*
+# mfc Vrai;;
+- : Resolution.forme_clausale = []
+# mfc Faux;;
+- : Resolution.forme_clausale = [[]]
+# mfc (Var "a");;
+- : Resolution.forme_clausale = [[Var "a"]]
+# mfc (Non Vrai);;
+- : Resolution.forme_clausale = [[]]
+# mfc (Non Faux);;
+- : Resolution.forme_clausale = []
+# mfc (Non (Var "a"));;
+- : Resolution.forme_clausale = [[Non (Var "a")]]
+# mfc (Non (Non (Var "a")));;
+- : Resolution.forme_clausale = [[Var "a"]]
+# mfc (Et (Ou (Var "a", Var "b"), Non (Et (Var "a", Non (Var "b")))));;
+- : Resolution.forme_clausale =
+[[Var "a"; Var "b"]; [Non (Var "a"); Var "b"]]
+  *)
 
   let resolutions clause1 clause2 =
     raise (Non_Implante "resolutions à compléter") (*clause -> clause -> clause list*) 
