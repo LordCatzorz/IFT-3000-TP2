@@ -43,7 +43,6 @@ struct
 
   type forme_clausale = TypesUtiles.forme_clausale
 
-
   let removeDuplicates lst =
     fold_left (fun acc x -> if mem x acc then acc else acc@[x]) [] lst
   ;;
@@ -69,8 +68,8 @@ struct
       aux liste
   ;;
 
-  let enonce2proposition (propList, conc) =
-    fold_right (fun x acc -> Et(x, acc)) propList (Non(conc))
+  let enonce2proposition (propList, conclu) =
+    fold_right (fun aProp accConjonction -> Et(aProp, accConjonction)) propList (Non(conclu))
   ;;
 
   let mfc prop =
