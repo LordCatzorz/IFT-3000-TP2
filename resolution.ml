@@ -88,26 +88,6 @@ struct
       | Equ(x1, x2) -> mfc (Et(Imp(x1, x2), Imp(x2, x1)))
   ;;
 
-  (*
-# mfc Vrai;;
-- : Resolution.forme_clausale = []
-# mfc Faux;;
-- : Resolution.forme_clausale = [[]]
-# mfc (Var "a");;
-- : Resolution.forme_clausale = [[Var "a"]]
-# mfc (Non Vrai);;
-- : Resolution.forme_clausale = [[]]
-# mfc (Non Faux);;
-- : Resolution.forme_clausale = []
-# mfc (Non (Var "a"));;
-- : Resolution.forme_clausale = [[Non (Var "a")]]
-# mfc (Non (Non (Var "a")));;
-- : Resolution.forme_clausale = [[Var "a"]]
-# mfc (Et (Ou (Var "a", Var "b"), Non (Et (Var "a", Non (Var "b")))));;
-- : Resolution.forme_clausale =
-[[Var "a"; Var "b"]; [Non (Var "a"); Var "b"]]
-  *)
-
   let resolutions clause1 clause2 =
     raise (Non_Implante "resolutions à compléter") (*clause -> clause -> clause list*) 
   ;;
