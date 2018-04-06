@@ -30,6 +30,7 @@
 module Resolution : RESOLUTION = 
 struct
   open List;;
+  open TypesUtiles;;
   (* Seul espace où implanter le code du TP2 *)
 
   exception Non_Implante of string
@@ -67,8 +68,8 @@ struct
       aux liste
   ;;
 
-  let enonce2proposition enon =
-    raise (Non_Implante "enonce2proposition à compléter") (*enonce_probleme -> proposition*) 
+  let enonce2proposition (propList, conclu) =
+    fold_right (fun aProp accConjonction -> Et(aProp, accConjonction)) propList (Non(conclu))
   ;;
 
   let mfc prop =
