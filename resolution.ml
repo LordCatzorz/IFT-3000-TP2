@@ -90,37 +90,13 @@ struct
 
   let resolutions clause1 clause2 =
     map (fun (_,l) -> l)
-      (filter (fun ((x,y), _) -> x = Non(y) || Non(x) = y)
-        (paires 
-          (union clause1 clause2)
-        )
+      (
+        filter (fun ((x,y), _) -> x = Non(y) || Non(x) = y)
+          (
+            paires (union clause1 clause2)
+          )
       )
-    (*[find_all (fun x -> exists (fun y -> x = Non(y) || Non(x) = y ) clause2) clause1]*)
   ;;
-(*)
-  # let c1 = [Var "p"; Non(Var "q"); Var "r"; Non(Var "s")];;
-val c1 : TypesUtiles.proposition list =
-  [Var "p"; Non (Var "q"); Var "r"; Non (Var "s")]
-# let c2 = [Var "r"; Non(Var "p"); Var "q"; Var "t"];;
-val c2 : TypesUtiles.proposition list =
-  [Var "r"; Non (Var "p"); Var "q"; Var "t"]
-# resolutions c1 c2;;
-- : Resolution.clause list =
-[[Non (Var "q"); Var "r"; Non (Var "s"); Var "q"; Var "t"];
- [Var "p"; Var "r"; Non (Var "s"); Non (Var "p"); Var "t"]]
-# resolutions [Non (Var "a"); Var "b"] [Non (Var "b")];;
-- : Resolution.clause list = [[Non (Var "a")]]
-# resolutions [Non (Var "a"); Var "b"] [Var "a"];;
-- : Resolution.clause list = [[Var "b"]]
-# resolutions [Non (Var "b")] [Var "a"];;
-- : Resolution.clause list = []
-# resolutions [Non (Var "a"); Var "b"] [Non (Var "b"); Var "a"];;
-- : Resolution.clause list =
-[[Var "b"; Non (Var "b")]; [Non (Var "a"); Var "a"]]
-# resolutions [Var "b"] [Non (Var "b")];;
-- : Resolution.clause list = [[]]
-
-*)
 
   let decision prop =
     raise (Non_Implante "decision à compléter") (*proposition -> bool*) 
