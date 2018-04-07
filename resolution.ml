@@ -27,7 +27,7 @@
 (******************************************************************************)
 (* Implantation                                                               *)
 (******************************************************************************)
-module Resolution : RESOLUTION = 
+module Resolution (*: RESOLUTION *)= 
 struct
   open List;;
   open TypesUtiles;;
@@ -99,8 +99,34 @@ struct
   ;;
 
   let decision prop =
-    raise (Non_Implante "decision à compléter") (*proposition -> bool*) 
+    let rec aux fc =
+      let p = paires fc in
+        let reso = map (fun ((x,y), _) -> resolutions x y ) p in
+          if exists (fun x -> x = []) reso then
+            true
+          else
+            if reso = [] then
+              false
+            else
+              exists (fun x -> aux x) reso
+    in
+      aux (mfc prop)
   ;;
+
+  (*
+# decision (enonce2proposition (aSynt (aLex "a => b; non b; non a")));;
+- : bool = true
+# decision (enonce2proposition (aSynt (aLex "a => b; non b; non b")));;
+- : bool = true
+# decision (enonce2proposition (aSynt (aLex "a => b; non b; a")));;
+- : bool = false
+# decision (enonce2proposition (aSynt (aLex "p <=> q; q <=> r; p <=> r")));;
+- : bool = true
+# decision (enonce2proposition (aSynt (aLex "a => b; a; b")));;
+- : bool = true
+# decision (Et (Imp (Var "a", Var "b"), Et (Var "a", Non (Var "b"))));;
+- : bool = true
+  *)
 
   let decisionTrace prop =
     raise (Non_Implante "decisionTrace à compléter") (*proposition -> forme_clausale list option*) 
