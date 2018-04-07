@@ -89,7 +89,13 @@ struct
   ;;
 
   let resolutions clause1 clause2 =
-    raise (Non_Implante "resolutions à compléter") (*clause -> clause -> clause list*) 
+    map (fun (_,l) -> l)
+      (
+        filter (fun ((x,y), _) -> x = Non(y) || Non(x) = y)
+          (
+            paires (union clause1 clause2)
+          )
+      )
   ;;
 
   let decision prop =
