@@ -89,7 +89,13 @@ struct
   ;;
 
   let resolutions clause1 clause2 =
-    [find_all (fun x -> exists (fun y -> x = Non(y) || Non(x) = y ) clause2) clause1]
+    map (fun (_,l) -> l)
+      (filter (fun ((x,y), _) -> x = Non(y) || Non(x) = y)
+        (paires 
+          (union clause1 clause2)
+        )
+      )
+    (*[find_all (fun x -> exists (fun y -> x = Non(y) || Non(x) = y ) clause2) clause1]*)
   ;;
 (*)
   # let c1 = [Var "p"; Non(Var "q"); Var "r"; Non(Var "s")];;
