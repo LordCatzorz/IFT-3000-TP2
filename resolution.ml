@@ -102,13 +102,7 @@ struct
     let rec aux fc =
       let p = paires fc in
         let reso = map (fun ((x,y), _) -> resolutions x y ) p in
-          if exists (fun x -> x = []) reso then
-            true
-          else
-            if reso = [] then
-              false
-            else
-              exists (fun x -> aux x) reso
+          exists (fun x -> x = [] || aux x) reso
     in
       aux (mfc prop)
   ;;
