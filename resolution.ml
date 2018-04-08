@@ -115,20 +115,6 @@ struct
   let resolutionsDesPairesEnNouvelleFormeClausale pairesList =
     map (fun ((x,y), r) -> union (resolutions x y) r) pairesList 
   ;;
-
-  (* Ne pas oublier de regarder si en utilisant des Vrai et des Faux dans la prop *)
-  let decision prop =
-    let rec aux fc =
-      let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
-        let p = paires fcClauseNonVrai in
-          let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
-            (* Depth first*)
-            (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
-            (* Breadth first*)
-            (exists (fun x -> fcContainsFalse x) resoFcList) || exists (fun x -> aux x) resoFcList
-    in
-      aux (mfc prop)
-  ;;
   
   let decisionTrace prop =
     let res = ref [[[]]] in 
@@ -136,8 +122,6 @@ struct
         let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
           let p = paires fcClauseNonVrai in
             let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
-              (* Depth first*)
-              (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
               (* Breadth first*)
               if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList)  then
               (
@@ -155,7 +139,13 @@ struct
           None
   ;;
 
-(*(10 pts) val decisionTrace : proposition -> forme_clausale list option*)
+
+
+  (* Ne pas oublier de regarder si en utilisant des Vrai et des Faux dans la prop *)
+  let decision prop =
+    decisionTrace prop <> None
+  ;;
+
 end;;
 
 (* Exploitation des fonctions à implanter (fichier resolution.ml):
