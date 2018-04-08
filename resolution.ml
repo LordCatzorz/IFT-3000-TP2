@@ -117,7 +117,10 @@ struct
       let fcClauseNonVrai = filter (fun x -> not (clauseContainsPAndNotP x)) fc in
         let p = paires fcClauseNonVrai in
           let resoFcList = obtainsReso p in
-            exists (fun x -> fcContainsFalse x || aux x) resoFcList
+            (* Depth first*)
+            (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
+            (* Bread first*)
+            (exists (fun x -> fcContainsFalse x) resoFcList) || exists (fun x -> aux x) resoFcList
     in
       aux (mfc prop)
   ;;
