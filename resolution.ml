@@ -116,6 +116,7 @@ struct
     map (fun ((x,y), r) -> union (resolutions x y) r) pairesList 
   ;;
 
+  (* Ne pas oublier de regarder si en utilisant des Vrai et des Faux dans la prop *)
   let decision prop =
     let rec aux fc =
       let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
