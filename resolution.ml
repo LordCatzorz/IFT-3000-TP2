@@ -27,7 +27,7 @@
 (******************************************************************************)
 (* Implantation                                                               *)
 (******************************************************************************)
-module Resolution (*: RESOLUTION*) = 
+module Resolution : RESOLUTION = 
 struct
   open List;;
   open TypesUtiles;;
