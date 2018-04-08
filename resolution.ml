@@ -122,8 +122,10 @@ struct
         let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
           let p = paires fcClauseNonVrai in
             let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
-              (* Breadth first*)
-              if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList)  then
+              (* Depth first *)
+              (*if (exists (fun x -> fcContainsFalse x || aux x) resoFcList) then*)
+              (* Breadth first *)
+              if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList) then
               (
                 res := fc::(!res);
                 true
