@@ -51,6 +51,20 @@ struct
     filter (fun x -> for_all (fun x' -> x <> x') elementsToRemove) lst
   ;;
 
+  let rec clauseContainsPAndNotP clause =
+    match clause with
+    | [] -> false
+    | x::r -> mem (Non(x)) r || mem x ((map (fun y -> Non(y))) r) || clauseContainsPAndNotP r
+  ;;
+
+  let removeClauseNonVraiDeFormeClausale fc =
+    filter (fun x -> not (clauseContainsPAndNotP x)) fc 
+  ;;
+
+  let fcContainsFalse (fc) =
+    exists (fun x -> x = []) fc
+  ;;
+
   let union liste1 liste2 =
     removeDuplicates (liste1@liste2)
   ;;
@@ -98,10 +112,23 @@ struct
       )
   ;;
 
-  let decision prop =
-    raise (Non_Implante "decision à compléter") (*proposition -> bool*) 
+  let resolutionsDesPairesEnNouvelleFormeClausale pairesList =
+    map (fun ((x,y), r) -> union (resolutions x y) r) pairesList 
   ;;
 
+  let decision prop =
+    let rec aux fc =
+      let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
+        let p = paires fcClauseNonVrai in
+          let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
+            (* Depth first*)
+            (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
+            (* Breadth first*)
+            (exists (fun x -> fcContainsFalse x) resoFcList) || exists (fun x -> aux x) resoFcList
+    in
+      aux (mfc prop)
+  ;;
+  
   let decisionTrace prop =
     raise (Non_Implante "decisionTrace à compléter") (*proposition -> forme_clausale list option*) 
   ;;
