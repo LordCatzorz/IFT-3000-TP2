@@ -115,23 +115,37 @@ struct
   let resolutionsDesPairesEnNouvelleFormeClausale pairesList =
     map (fun ((x,y), r) -> union (resolutions x y) r) pairesList 
   ;;
+  
+  let decisionTrace prop =
+    let res = ref [[[]]] in 
+      let rec aux fc =
+        let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
+          let p = paires fcClauseNonVrai in
+            let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
+              (* Depth first *)
+              (*if (exists (fun x -> fcContainsFalse x || aux x) resoFcList) then*)
+              (* Breadth first *)
+              if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList) then
+              (
+                res := fc::(!res);
+                true
+              )
+              else
+              (
+                false
+              )
+      in
+        if aux (mfc prop) then
+          Some !res
+        else
+          None
+  ;;
+
+
 
   (* Ne pas oublier de regarder si en utilisant des Vrai et des Faux dans la prop *)
   let decision prop =
-    let rec aux fc =
-      let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
-        let p = paires fcClauseNonVrai in
-          let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
-            (* Depth first*)
-            (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
-            (* Breadth first*)
-            (exists (fun x -> fcContainsFalse x) resoFcList) || exists (fun x -> aux x) resoFcList
-    in
-      aux (mfc prop)
-  ;;
-  
-  let decisionTrace prop =
-    raise (Non_Implante "decisionTrace à compléter") (*proposition -> forme_clausale list option*) 
+    decisionTrace prop <> None
   ;;
 
 end;;
