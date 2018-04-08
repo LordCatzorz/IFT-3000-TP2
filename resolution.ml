@@ -51,6 +51,10 @@ struct
     filter (fun x -> for_all (fun x' -> x <> x') elementsToRemove) lst
   ;;
 
+  let clauseContainsPAndNotP clause =
+    exists (fun ((x,y), _) -> x = Non(y) || y = Non(x) || x = Vrai || y = Vrai) (paires clause)
+  ;;
+
   let union liste1 liste2 =
     removeDuplicates (liste1@liste2)
   ;;
@@ -98,14 +102,55 @@ struct
       )
   ;;
 
+  let obtainsReso p =
+    map (fun ((x,y), r) -> union (resolutions x y) r) p 
+  ;;
+
+  let fcContainsFalse (fc : forme_clausale) =
+    exists (fun x -> x = []) fc
+  ;;
+
+  let rec clauseContainsPAndNotP2 clause =
+    match clause with
+    | [] -> false
+    | x::r -> mem (Non(x)) r || mem x ((map (fun y -> Non(y))) r) || clauseContainsPAndNotP2 r
+  ;;
+
   let decision prop =
     let rec aux fc =
-      let p = paires fc in
-        let reso = map (fun ((x,y), _) -> resolutions x y ) p in
-          exists (fun x -> x = [] || aux x) reso
+      let fcClauseNonVrai = filter (fun x -> not (clauseContainsPAndNotP2 x)) fc in
+        let p = paires fcClauseNonVrai in
+          let resoFcList = obtainsReso p in
+            exists (fun x -> fcContainsFalse x || aux x) resoFcList
     in
       aux (mfc prop)
   ;;
+
+(*
+(filter (fun x -> not (clauseContainsPAndNotP x)) fc) in
+        let p = paires fcClauseNonVrai in
+          let reso = obtainsReso p in
+            if exists (fun x -> x = [[]]) reso then
+              true
+            else
+              if reso = [] then
+                false
+              else
+                exists (fun x -> aux x) reso
+ *)
+
+(*
+
+let decision prop =
+    let rec aux fc =
+      let p = paires fc in
+        let reso = map (fun ((x,y), r) -> union (resolutions x y) r) p in
+            map (fun x -> paires x) reso      
+    in
+      aux (mfc prop)
+  ;;
+
+*)
 
   (*
 # decision (enonce2proposition (aSynt (aLex "a => b; non b; non a")));;
@@ -120,6 +165,12 @@ struct
 - : bool = true
 # decision (Et (Imp (Var "a", Var "b"), Et (Var "a", Non (Var "b"))));;
 - : bool = true
+
+
+      let p = paires fc in
+        let reso = map (fun ((x,y), r) -> resolutions x y ) p in
+          let validResolution = filter (fun x -> x <> []) reso in
+            exists (fun x -> x = [] || aux x) validResolution
   *)
 
   let decisionTrace prop =
