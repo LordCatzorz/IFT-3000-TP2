@@ -119,7 +119,7 @@ struct
           let resoFcList = obtainsReso p in
             (* Depth first*)
             (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
-            (* Bread first*)
+            (* Breadth first*)
             (exists (fun x -> fcContainsFalse x) resoFcList) || exists (fun x -> aux x) resoFcList
     in
       aux (mfc prop)
