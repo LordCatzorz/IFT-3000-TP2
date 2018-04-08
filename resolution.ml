@@ -121,7 +121,7 @@ struct
       let rec aux fc =
         let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
           if fcClauseNonVrai = [[]] then
-            true 
+            true (* Sortir si la forme clausale est seulement Faux *)
           else
             let p = paires fcClauseNonVrai in
               let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
