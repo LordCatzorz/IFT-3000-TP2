@@ -120,20 +120,23 @@ struct
     let res = ref [[[]]] in 
       let rec aux fc =
         let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
-          let p = paires fcClauseNonVrai in
-            let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
-              (* Depth first *)
-              (*if (exists (fun x -> fcContainsFalse x || aux x) resoFcList) then*)
-              (* Breadth first *)
-              if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList) then
-              (
-                res := fc::(!res);
-                true
-              )
-              else
-              (
-                false
-              )
+          if fcClauseNonVrai = [[]] then
+            true (* Sortir si la forme clausale est seulement Faux *)
+          else
+            let p = paires fcClauseNonVrai in
+              let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
+                (* Depth first *)
+                (*if (exists (fun x -> fcContainsFalse x || aux x) resoFcList) then*)
+                (* Breadth first *)
+                if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList) then
+                (
+                  res := fc::(!res);
+                  true
+                )
+                else
+                (
+                  false
+                )
       in
         if aux (mfc prop) then
           Some !res
