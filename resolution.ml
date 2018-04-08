@@ -57,6 +57,10 @@ struct
     | x::r -> mem (Non(x)) r || mem x ((map (fun y -> Non(y))) r) || clauseContainsPAndNotP r
   ;;
 
+  let removeClauseNonVraiDeFormeClausale fc =
+    filter (fun x -> not (clauseContainsPAndNotP x)) fc 
+  ;;
+
   let fcContainsFalse (fc) =
     exists (fun x -> x = []) fc
   ;;
@@ -108,15 +112,15 @@ struct
       )
   ;;
 
-  let obtainsReso p =
-    map (fun ((x,y), r) -> union (resolutions x y) r) p 
+  let resolutionsDesPairesEnNouvelleFormeClausale pairesList =
+    map (fun ((x,y), r) -> union (resolutions x y) r) pairesList 
   ;;
 
   let decision prop =
     let rec aux fc =
-      let fcClauseNonVrai = filter (fun x -> not (clauseContainsPAndNotP x)) fc in
+      let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
         let p = paires fcClauseNonVrai in
-          let resoFcList = obtainsReso p in
+          let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
             (* Depth first*)
             (*exists (fun x -> fcContainsFalse x || aux x) resoFcList*)
             (* Breadth first*)
@@ -124,6 +128,7 @@ struct
     in
       aux (mfc prop)
   ;;
+  
   let decisionTrace prop =
     raise (Non_Implante "decisionTrace à compléter") (*proposition -> forme_clausale list option*) 
   ;;
