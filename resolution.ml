@@ -70,7 +70,7 @@ struct
   ;;
 
   let prod liste1 liste2 =
-    flatten (map (fun x -> map (fun y -> union x y) liste2 ) liste1)
+    removeDuplicates (flatten (map (fun x -> map (fun y -> union x y) liste2 ) liste1))
   ;;
 
   let paires liste =
