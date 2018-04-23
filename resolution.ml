@@ -144,9 +144,6 @@ struct
           None
   ;;
 
-
-
-  (* Ne pas oublier de regarder si en utilisant des Vrai et des Faux dans la prop *)
   let decision prop =
     decisionTrace prop <> None
   ;;
