@@ -27,7 +27,7 @@
 (******************************************************************************)
 (* Implantation                                                               *)
 (******************************************************************************)
-module Resolution : RESOLUTION = 
+module Resolution (*: RESOLUTION*) = 
 struct
   open List;;
   open TypesUtiles;;
@@ -122,13 +122,25 @@ struct
         let fcClauseNonVrai = removeClauseNonVraiDeFormeClausale fc in
           if fcClauseNonVrai = [[]] then
             true (* Sortir si la forme clausale est seulement Faux *)
+          else if fcContainsFalse fcClauseNonVrai then
+          (
+            res := fc::(!res);
+            true
+          )
           else
             let p = paires fcClauseNonVrai in
               let resoFcList = resolutionsDesPairesEnNouvelleFormeClausale p in
                 (* Depth first *)
                 (*if (exists (fun x -> fcContainsFalse x || aux x) resoFcList) then*)
                 (* Breadth first *)
-                if (exists (fun x -> fcContainsFalse x) resoFcList) || (exists (fun x -> aux x) resoFcList) then
+                if (exists (fun x -> 
+                    let falseTrouve = fcContainsFalse x in 
+                    (
+                      (if falseTrouve && x <> [[]] then res := x::(!res));
+                      falseTrouve
+                    )
+                  ) resoFcList)
+                 || (exists (fun x -> aux x) resoFcList) then
                 (
                   res := fc::(!res);
                   true
